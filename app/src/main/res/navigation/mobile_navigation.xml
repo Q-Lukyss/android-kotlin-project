@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_home">
+    app:startDestination="@+id/loginFragment">
 
     <fragment
         android:id="@+id/navigation_home"
@@ -22,4 +22,47 @@
         android:name="com.lukyss.android_kotlin_project.ui.notifications.NotificationsFragment"
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_notifications" />
+
+    <fragment
+        android:id="@+id/navigation_note"
+        android:name="com.lukyss.android_kotlin_project.ui.note.NoteFragment"
+        android:label="@string/title_note"
+        tools:layout="@layout/fragment_note" />
+
+    <fragment
+        android:id="@+id/navigation_absence"
+        android:name="com.lukyss.android_kotlin_project.ui.absence.AbsenceFragment"
+        android:label="@string/title_absence"
+        tools:layout="@layout/fragment_absence" />
+
+    <fragment
+        android:id="@+id/navigation_support_cours"
+        android:name="com.lukyss.android_kotlin_project.ui.support_cours.SupportCoursFragment"
+        android:label="@string/title_support_cours"
+        tools:layout="@layout/fragment_support_cours" />
+
+    <fragment
+        android:id="@+id/navigation_calendrier"
+        android:name="com.lukyss.android_kotlin_project.ui.calendrier.CalendrierFragment"
+        android:label="@string/title_calendrier"
+        tools:layout="@layout/fragment_calendrier" />
+
+    <fragment
+        android:id="@+id/navigation_news"
+        android:name="com.lukyss.android_kotlin_project.ui.news.NewsFragment"
+        android:label="@string/title_news"
+        tools:layout="@layout/fragment_news" />
+
+    <activity
+        android:id="@+id/mainActivity"
+        android:name="com.lukyss.android_kotlin_project.MainActivity"
+        android:label="MainActivity" />
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.lukyss.android_kotlin_project.ui.LoginFragment"
+        android:label="LoginFragment" >
+        <action
+            android:id="@+id/action_loginFragment_to_mainActivity"
+            app:destination="@id/mainActivity" />
+    </fragment>
 </navigation>
