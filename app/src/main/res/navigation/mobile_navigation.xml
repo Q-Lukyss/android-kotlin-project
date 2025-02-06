@@ -6,10 +6,10 @@
     app:startDestination="@+id/loginFragment">
 
     <fragment
-        android:id="@+id/navigation_home"
-        android:name="com.lukyss.android_kotlin_project.ui.home.HomeFragment"
+        android:id="@+id/navigation_home_etudiant"
+        android:name="com.lukyss.android_kotlin_project.ui.home_etudiant.HomeEtudiantFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home_etudiant" />
 
     <fragment
         android:id="@+id/navigation_dashboard"
@@ -65,4 +65,9 @@
             android:id="@+id/action_loginFragment_to_mainActivity"
             app:destination="@id/mainActivity" />
     </fragment>
+    <fragment
+        android:id="@+id/navigation_home_administratif"
+        android:name="com.lukyss.android_kotlin_project.ui.home_administratif.HomeAdministratifFragment"
+        android:label="fragment_home_administratif"
+        tools:layout="@layout/fragment_home_administratif" />
 </navigation>

@@ -12,7 +12,7 @@
         android:title="@string/title_absence" />
 
     <item
-        android:id="@+id/navigation_home"
+        android:id="@+id/navigation_home_etudiant"
         android:icon="@drawable/ic_home_black_24dp"
         android:title="@string/title_home" />
 
