@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -20,172 +20,177 @@
             android:orientation="vertical"
             android:layout_marginBottom="16dp">
 
-        <TextView
-            android:id="@+id/news_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="News"
-            android:textSize="20sp"
-            android:textColor="#F5F5DC"
-            android:textStyle="bold"
-            android:layout_marginBottom="8dp"/>
+            <TextView
+                android:id="@+id/news_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="News"
+                android:textSize="20sp"
+                android:textColor="#F5F5DC"
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp"/>
 
-        <!-- ProgressBar pour l'état de chargement -->
-        <ProgressBar
-            android:id="@+id/news_progress"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone" />
+            <!-- ProgressBar pour l'état de chargement -->
+            <ProgressBar
+                android:id="@+id/newsProgress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone" />
 
-        <!-- Message d'erreur -->
-        <TextView
-            android:id="@+id/news_error"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#FF5722"
-            android:visibility="gone"
-            android:layout_marginBottom="8dp"/>
+            <!-- Message d'erreur -->
+            <TextView
+                android:id="@+id/newsError"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#FF5722"
+                android:visibility="gone"
+                android:layout_marginBottom="8dp"/>
 
-        <!-- Container pour afficher la liste des news (peut être remplacé par un RecyclerView) -->
+            <!-- ICI : on remplace le LinearLayout par un TextView
+                 pour pouvoir utiliser .text = ... en Kotlin -->
+            <TextView
+                android:id="@+id/newsContent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/white"
+                android:textSize="16sp"
+                android:layout_marginBottom="8dp"/>
+        </LinearLayout>
+
+        <!-- Section Moyenne Générale -->
         <LinearLayout
-            android:id="@+id/news_container"
+            android:id="@+id/section_average"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" />
-    </LinearLayout>
+            android:background="#FFFFFF"
+            android:padding="16dp"
+            android:orientation="vertical"
+            android:layout_marginBottom="16dp">
 
-    <!-- Section Moyenne Générale -->
-    <LinearLayout
-        android:id="@+id/section_average"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#FFFFFF"
-        android:padding="16dp"
-        android:orientation="vertical"
-        android:layout_marginBottom="16dp">
+            <TextView
+                android:id="@+id/average_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Moyenne générale"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp"/>
 
-        <TextView
-            android:id="@+id/average_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Moyenne générale"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="8dp"/>
+            <ProgressBar
+                android:id="@+id/averageGradeProgress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone" />
 
-        <ProgressBar
-            android:id="@+id/average_progress"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone" />
+            <TextView
+                android:id="@+id/averageGradeError"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#FF5722"
+                android:visibility="gone"
+                android:layout_marginBottom="8dp"/>
 
-        <TextView
-            android:id="@+id/average_error"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#FF5722"
-            android:visibility="gone"
-            android:layout_marginBottom="8dp"/>
+            <TextView
+                android:id="@+id/averageGradeText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="24sp"
+                android:textStyle="bold"/>
+        </LinearLayout>
 
-        <TextView
-            android:id="@+id/average_value"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="24sp"
-            android:textStyle="bold"/>
-    </LinearLayout>
-
-    <!-- Section Présences / Absences -->
-    <LinearLayout
-        android:id="@+id/section_presence"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#FFFFFF"
-        android:padding="16dp"
-        android:orientation="vertical"
-        android:layout_marginBottom="16dp">
-
-        <TextView
-            android:id="@+id/presence_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Présences / Absences"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="8dp"/>
-
-        <ProgressBar
-            android:id="@+id/presence_progress"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone" />
-
-        <TextView
-            android:id="@+id/presence_error"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#FF5722"
-            android:visibility="gone"
-            android:layout_marginBottom="8dp"/>
-
-        <TextView
-            android:id="@+id/presence_count"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Présences : 0" />
-
-        <TextView
-            android:id="@+id/absence_count"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Absences : 0" />
-    </LinearLayout>
-
-    <!-- Section Cours du prochain jour de séance -->
-    <LinearLayout
-        android:id="@+id/section_seances"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#FFFFFF"
-        android:padding="16dp"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/seances_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Cours du prochain jour de séance"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="8dp"/>
-
-        <ProgressBar
-            android:id="@+id/seances_progress"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone" />
-
-        <TextView
-            android:id="@+id/seances_error"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#FF5722"
-            android:visibility="gone"
-            android:layout_marginBottom="8dp"/>
-
-        <TextView
-            android:id="@+id/seances_next_day"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=""/>
-
-        <!-- Container pour afficher la liste des séances (peut être un RecyclerView) -->
+        <!-- Section Présences / Absences -->
         <LinearLayout
-            android:id="@+id/seances_container"
+            android:id="@+id/section_presence"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" />
-    </LinearLayout>
+            android:background="#FFFFFF"
+            android:padding="16dp"
+            android:orientation="vertical"
+            android:layout_marginBottom="16dp">
 
-</LinearLayout>
-    </ScrollView>
+            <TextView
+                android:id="@+id/presence_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Présences / Absences"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp"/>
+
+            <ProgressBar
+                android:id="@+id/presenceProgress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/presenceError"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#FF5722"
+                android:visibility="gone"
+                android:layout_marginBottom="8dp"/>
+
+            <TextView
+                android:id="@+id/nbPresencesText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Présences : 0" />
+
+            <TextView
+                android:id="@+id/nbAbsencesText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Absences : 0" />
+        </LinearLayout>
+
+        <!-- Section Cours du prochain jour de séance -->
+        <LinearLayout
+            android:id="@+id/section_seances"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#FFFFFF"
+            android:padding="16dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/seances_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cours du prochain jour de séance"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp"/>
+
+            <ProgressBar
+                android:id="@+id/seanceProgress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/seanceError"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#FF5722"
+                android:visibility="gone"
+                android:layout_marginBottom="8dp"/>
+
+            <TextView
+                android:id="@+id/nextCourseDayKey"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""/>
+
+            <!-- ICI : on remplace le LinearLayout par un TextView
+                 pour pouvoir utiliser .text = ... en Kotlin -->
+            <TextView
+                android:id="@+id/nextCourseSeancesContent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/black"
+                android:textSize="16sp"/>
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

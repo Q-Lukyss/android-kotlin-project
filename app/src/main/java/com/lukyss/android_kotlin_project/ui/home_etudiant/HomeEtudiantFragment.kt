@@ -31,7 +31,7 @@ class HomeEtudiantFragment : Fragment() {
         _binding = FragmentHomeEtudiantBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        // Instanciation des ViewModels (ici, on utilise ViewModelProvider, vous pouvez adapter avec DI si besoin)
+        // Instanciation des ViewModels
         newsViewModel = ViewModelProvider(this).get(NewsViewModel::class.java)
         noteViewModel = ViewModelProvider(this).get(NoteViewModel::class.java)
         presenceViewModel = ViewModelProvider(this).get(PresenceViewModel::class.java)
@@ -40,15 +40,13 @@ class HomeEtudiantFragment : Fragment() {
 
         // Observer les News
         newsViewModel.news.observe(viewLifecycleOwner) { newsList ->
-            // Ici, mettez à jour votre RecyclerView ou LinearLayout contenant les news.
-            // Par exemple, adapterNews.submitList(newsList)
             binding.newsContent.text = newsList.joinToString("\n") { "${it.titre} : ${it.contenu}" }
         }
         newsViewModel.loadingNews.observe(viewLifecycleOwner) { isLoading ->
             binding.newsProgress.visibility = if (isLoading) View.VISIBLE else View.GONE
         }
         newsViewModel.errorNews.observe(viewLifecycleOwner) { error ->
-            binding.newsError.text = error
+            binding.newsError.text = error ?: ""
             binding.newsError.visibility = if (error != null) View.VISIBLE else View.GONE
         }
 
@@ -60,7 +58,7 @@ class HomeEtudiantFragment : Fragment() {
             binding.averageGradeProgress.visibility = if (isLoading) View.VISIBLE else View.GONE
         }
         noteViewModel.errorGlobalNotes.observe(viewLifecycleOwner) { error ->
-            binding.averageGradeError.text = error
+            binding.averageGradeError.text = error ?: ""
             binding.averageGradeError.visibility = if (error != null) View.VISIBLE else View.GONE
         }
 
@@ -75,24 +73,20 @@ class HomeEtudiantFragment : Fragment() {
             binding.presenceProgress.visibility = if (isLoading) View.VISIBLE else View.GONE
         }
         presenceViewModel.errorPresence.observe(viewLifecycleOwner) { error ->
-            binding.presenceError.text = error
+            binding.presenceError.text = error ?: ""
             binding.presenceError.visibility = if (error != null) View.VISIBLE else View.GONE
         }
 
-        // Observer les séances à venir pour afficher "Cours du prochain jour de séance"
+        // Observer les séances à venir
         seanceViewModel.upcomingSeances.observe(viewLifecycleOwner) { upcoming ->
             if (upcoming.isNotEmpty()) {
-                // Tri pour obtenir la séance la plus proche
                 val sorted = upcoming.sortedBy { it.date }
-                val nextDay = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-                    .format(sorted.first().date)
+                val nextDay = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(sorted.first().date)
                 binding.nextCourseDayKey.text = "Séances pour le $nextDay :"
-                // Filtrer les séances du prochain jour
+
                 val nextDaySeances = upcoming.filter { seance ->
-                    nextDay == SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-                        .format(seance.date)
+                    nextDay == SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(seance.date)
                 }
-                // Ici, vous pouvez mettre à jour une RecyclerView ou une ListView pour afficher nextDaySeances.
                 binding.nextCourseSeancesContent.text = nextDaySeances.joinToString("\n") { seance ->
                     val timeStart = SimpleDateFormat("HH:mm", Locale.getDefault()).format(seance.date)
                     val timeEnd = SimpleDateFormat("HH:mm", Locale.getDefault()).format(seance.dateFin)
@@ -102,25 +96,25 @@ class HomeEtudiantFragment : Fragment() {
                 binding.nextCourseDayKey.text = "Aucune séance à venir"
                 binding.nextCourseSeancesContent.text = ""
             }
-            seanceViewModel.errorSeances.observe(viewLifecycleOwner) { error ->
-                binding.seanceError.text = error
-                binding.seanceError.visibility = if (error != null) View.VISIBLE else View.GONE
-            }
-            seanceViewModel.loadingSeances.observe(viewLifecycleOwner) { isLoading ->
-                binding.seanceProgress.visibility = if (isLoading) View.VISIBLE else View.GONE
-            }
+        }
+        seanceViewModel.errorSeances.observe(viewLifecycleOwner) { error ->
+            binding.seanceError.text = error ?: ""
+            binding.seanceError.visibility = if (error != null) View.VISIBLE else View.GONE
+        }
+        seanceViewModel.loadingSeances.observe(viewLifecycleOwner) { isLoading ->
+            binding.seanceProgress.visibility = if (isLoading) View.VISIBLE else View.GONE
         }
 
-        // Récupérer l'ID de l'utilisateur courant (à adapter selon votre implémentation d'auth)
+        // Exemple d'ID utilisateur (à adapter)
         val currentUserId = getCurrentUserId()
 
-        // Charger les données dès le montage
+        // Charger les données
         newsViewModel.fetchNews()
         noteViewModel.fetchNotesForUser(currentUserId)
         presenceViewModel.fetchPresencesForUser(currentUserId)
         coursViewModel.fetchFormationAndCoursesForUser(currentUserId)
 
-        // Lors du chargement des cours, charger les séances à venir si des cours existent
+        // Lorsque les cours sont chargés, charger les séances à venir
         coursViewModel.courses.observe(viewLifecycleOwner) { courses ->
             if (courses.isNotEmpty()) {
                 val courseIds = courses.map { it.uid }
@@ -131,9 +125,7 @@ class HomeEtudiantFragment : Fragment() {
         return root
     }
 
-    // Exemple d'une fonction pour obtenir l'ID de l'utilisateur courant
     private fun getCurrentUserId(): String {
-        // Vous pouvez récupérer l'ID via FirebaseAuth ou votre gestionnaire d'authentification
         return "exempleUserId"
     }
 
