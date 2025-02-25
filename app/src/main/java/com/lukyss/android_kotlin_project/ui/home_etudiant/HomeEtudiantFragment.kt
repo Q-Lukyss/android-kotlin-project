@@ -4,35 +4,137 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.lukyss.android_kotlin_project.databinding.FragmentHomeEtudiantBinding
+import com.lukyss.android_kotlin_project.viewmodels.*
+import java.text.SimpleDateFormat
+import java.util.*
 
 class HomeEtudiantFragment : Fragment() {
 
     private var _binding: FragmentHomeEtudiantBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
+
+    // Déclaration des ViewModels
+    private lateinit var newsViewModel: NewsViewModel
+    private lateinit var noteViewModel: NoteViewModel
+    private lateinit var presenceViewModel: PresenceViewModel
+    private lateinit var seanceViewModel: SeanceViewModel
+    private lateinit var coursViewModel: CoursViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val homeViewModel =
-            ViewModelProvider(this).get(HomeEtudiantViewModel::class.java)
-
         _binding = FragmentHomeEtudiantBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textHome
-        homeViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
+        // Instanciation des ViewModels (ici, on utilise ViewModelProvider, vous pouvez adapter avec DI si besoin)
+        newsViewModel = ViewModelProvider(this).get(NewsViewModel::class.java)
+        noteViewModel = ViewModelProvider(this).get(NoteViewModel::class.java)
+        presenceViewModel = ViewModelProvider(this).get(PresenceViewModel::class.java)
+        seanceViewModel = ViewModelProvider(this).get(SeanceViewModel::class.java)
+        coursViewModel = ViewModelProvider(this).get(CoursViewModel::class.java)
+
+        // Observer les News
+        newsViewModel.news.observe(viewLifecycleOwner) { newsList ->
+            // Ici, mettez à jour votre RecyclerView ou LinearLayout contenant les news.
+            // Par exemple, adapterNews.submitList(newsList)
+            binding.newsContent.text = newsList.joinToString("\n") { "${it.titre} : ${it.contenu}" }
         }
+        newsViewModel.loadingNews.observe(viewLifecycleOwner) { isLoading ->
+            binding.newsProgress.visibility = if (isLoading) View.VISIBLE else View.GONE
+        }
+        newsViewModel.errorNews.observe(viewLifecycleOwner) { error ->
+            binding.newsError.text = error
+            binding.newsError.visibility = if (error != null) View.VISIBLE else View.GONE
+        }
+
+        // Observer la moyenne générale
+        noteViewModel.averageGrade.observe(viewLifecycleOwner) { avg ->
+            binding.averageGradeText.text = String.format("%.2f", avg)
+        }
+        noteViewModel.loadingGlobalNotes.observe(viewLifecycleOwner) { isLoading ->
+            binding.averageGradeProgress.visibility = if (isLoading) View.VISIBLE else View.GONE
+        }
+        noteViewModel.errorGlobalNotes.observe(viewLifecycleOwner) { error ->
+            binding.averageGradeError.text = error
+            binding.averageGradeError.visibility = if (error != null) View.VISIBLE else View.GONE
+        }
+
+        // Observer les présences/absences
+        presenceViewModel.nbPresences.observe(viewLifecycleOwner) { count ->
+            binding.nbPresencesText.text = count.toString()
+        }
+        presenceViewModel.nbAbsences.observe(viewLifecycleOwner) { count ->
+            binding.nbAbsencesText.text = count.toString()
+        }
+        presenceViewModel.loadingPresence.observe(viewLifecycleOwner) { isLoading ->
+            binding.presenceProgress.visibility = if (isLoading) View.VISIBLE else View.GONE
+        }
+        presenceViewModel.errorPresence.observe(viewLifecycleOwner) { error ->
+            binding.presenceError.text = error
+            binding.presenceError.visibility = if (error != null) View.VISIBLE else View.GONE
+        }
+
+        // Observer les séances à venir pour afficher "Cours du prochain jour de séance"
+        seanceViewModel.upcomingSeances.observe(viewLifecycleOwner) { upcoming ->
+            if (upcoming.isNotEmpty()) {
+                // Tri pour obtenir la séance la plus proche
+                val sorted = upcoming.sortedBy { it.date }
+                val nextDay = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+                    .format(sorted.first().date)
+                binding.nextCourseDayKey.text = "Séances pour le $nextDay :"
+                // Filtrer les séances du prochain jour
+                val nextDaySeances = upcoming.filter { seance ->
+                    nextDay == SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+                        .format(seance.date)
+                }
+                // Ici, vous pouvez mettre à jour une RecyclerView ou une ListView pour afficher nextDaySeances.
+                binding.nextCourseSeancesContent.text = nextDaySeances.joinToString("\n") { seance ->
+                    val timeStart = SimpleDateFormat("HH:mm", Locale.getDefault()).format(seance.date)
+                    val timeEnd = SimpleDateFormat("HH:mm", Locale.getDefault()).format(seance.dateFin)
+                    "Cours: ${seance.idCours} à ${seance.lieu}, de $timeStart à $timeEnd"
+                }
+            } else {
+                binding.nextCourseDayKey.text = "Aucune séance à venir"
+                binding.nextCourseSeancesContent.text = ""
+            }
+            seanceViewModel.errorSeances.observe(viewLifecycleOwner) { error ->
+                binding.seanceError.text = error
+                binding.seanceError.visibility = if (error != null) View.VISIBLE else View.GONE
+            }
+            seanceViewModel.loadingSeances.observe(viewLifecycleOwner) { isLoading ->
+                binding.seanceProgress.visibility = if (isLoading) View.VISIBLE else View.GONE
+            }
+        }
+
+        // Récupérer l'ID de l'utilisateur courant (à adapter selon votre implémentation d'auth)
+        val currentUserId = getCurrentUserId()
+
+        // Charger les données dès le montage
+        newsViewModel.fetchNews()
+        noteViewModel.fetchNotesForUser(currentUserId)
+        presenceViewModel.fetchPresencesForUser(currentUserId)
+        coursViewModel.fetchFormationAndCoursesForUser(currentUserId)
+
+        // Lors du chargement des cours, charger les séances à venir si des cours existent
+        coursViewModel.courses.observe(viewLifecycleOwner) { courses ->
+            if (courses.isNotEmpty()) {
+                val courseIds = courses.map { it.uid }
+                seanceViewModel.fetchUpcomingSeancesForCourses(courseIds)
+            }
+        }
+
         return root
+    }
+
+    // Exemple d'une fonction pour obtenir l'ID de l'utilisateur courant
+    private fun getCurrentUserId(): String {
+        // Vous pouvez récupérer l'ID via FirebaseAuth ou votre gestionnaire d'authentification
+        return "exempleUserId"
     }
 
     override fun onDestroyView() {

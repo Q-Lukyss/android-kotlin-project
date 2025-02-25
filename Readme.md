@@ -1,7 +1,7 @@
 # Todo
 
-* Page de Login
-* Page Dashboard
+* Page de Login - ok
+* Page Dashboard - ok
 * Page Support Cours
 * Page Doc administratif
 * Pages Notes
