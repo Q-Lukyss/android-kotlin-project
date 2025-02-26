@@ -123,7 +123,8 @@ class CoursViewModel(
         _loadingCourses.value = true
         viewModelScope.launch {
             try {
-                _courses.value = coursService.getCourses()
+                // Logique pour récupérer les cours depuis Firestore
+                _courses.value = listOf() // À remplacer par la logique réelle
                 _errorCourses.value = null
             } catch (e: Exception) {
                 _errorCourses.value = e.message

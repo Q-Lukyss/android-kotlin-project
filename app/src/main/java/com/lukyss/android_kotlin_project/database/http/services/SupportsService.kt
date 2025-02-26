@@ -1,6 +1,7 @@
 // SupportService.kt
 package com.lukyss.android_kotlin_project.database.http.services
 
+import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.lukyss.android_kotlin_project.database.http.models.Supports
@@ -12,10 +13,14 @@ class SupportsService {
 
     // Récupère les supports pour un cours donné
     suspend fun getSupportsForCourse(courseId: String): List<Supports> {
-        val q = collectionRef.whereEqualTo("id_cours", courseId)
-        val querySnapshot = q.get().await()
-        return querySnapshot.documents.map { doc ->
-            Supports.fromFirestore(doc.data, doc.id)
+        return try {
+            val querySnapshot = collectionRef.whereEqualTo("id_cours", courseId).get().await()
+            querySnapshot.documents.mapNotNull { doc ->
+                doc.data?.let { Supports.fromFirestore(it, doc.id) }
+            }
+        } catch (e: Exception) {
+            Log.e("SupportService", "Erreur lors de la récupération des supports", e)
+            throw e
         }
     }
 
