@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_margin="8dp"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="4dp"
+    app:cardBackgroundColor="@color/lightbeige">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="12dp">
+
+        <TextView
+            android:id="@+id/tvLieu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Lieu :"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/darkblue"/>
+
+        <TextView
+            android:id="@+id/tvTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="De HH:mm à HH:mm"
+            android:textSize="14sp"
+            android:textColor="@color/darkblue"
+            android:layout_marginTop="4dp"/>
+
+        <TextView
+            android:id="@+id/tvCourse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cours :"
+            android:textSize="14sp"
+            android:textColor="@color/darkblue"
+            android:layout_marginTop="4dp"/>
+
+        <TextView
+            android:id="@+id/tvTeacher"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Enseignant :"
+            android:textSize="14sp"
+            android:textColor="@color/darkblue"
+            android:layout_marginTop="4dp"/>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
