@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.google.firebase.auth.FirebaseAuth
 import com.lukyss.android_kotlin_project.databinding.FragmentHomeEtudiantBinding
 import com.lukyss.android_kotlin_project.viewmodels.*
 import java.text.SimpleDateFormat
@@ -126,7 +127,7 @@ class HomeEtudiantFragment : Fragment() {
     }
 
     private fun getCurrentUserId(): String {
-        return "exempleUserId"
+        return FirebaseAuth.getInstance().currentUser?.uid ?: "user"
     }
 
     override fun onDestroyView() {
