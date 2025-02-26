@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="4dp"
+    app:cardBackgroundColor="@color/lightbeige">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="12dp">
+
+        <TextView
+            android:id="@+id/tvNewsTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Titre de la news"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/darkblue"/>
+
+        <!-- Contenu de la news -->
+        <TextView
+            android:id="@+id/tvNewsContent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Contenu de la news..."
+            android:textSize="14sp"
+            android:textColor="@color/darkblue"
+            android:layout_marginTop="4dp"/>
+
+        <!-- Date de publication -->
+        <TextView
+            android:id="@+id/tvNewsDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Publié le : 2025-02-26"
+            android:textSize="12sp"
+            android:textColor="@color/lightbeige"
+            android:layout_marginTop="4dp"/>
+
+        <!-- Boutons Modifier et Supprimer -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp"
+            android:gravity="end">
+
+            <Button
+                android:id="@+id/btnEditNews"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Modifier"
+                android:backgroundTint="@color/darkblue"
+                android:textColor="@android:color/white"/>
+
+            <Button
+                android:id="@+id/btnDeleteNews"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Supprimer"
+                android:layout_marginStart="8dp"
+                android:backgroundTint="@color/lightviolet"
+                android:textColor="@android:color/white"/>
+        </LinearLayout>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
