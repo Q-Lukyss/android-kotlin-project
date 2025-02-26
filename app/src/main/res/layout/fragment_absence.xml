@@ -1,22 +1,134 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.absence.AbsenceFragment">
+    android:background="@color/darkblue"
+    android:padding="16dp">
 
-    <TextView
-        android:id="@+id/text_absence"
+<LinearLayout
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:orientation="vertical">
+
+<!-- Carte pour le titre et le loader/erreur -->
+<androidx.cardview.widget.CardView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="4dp"
+    app:cardBackgroundColor="@color/lightbeige"
+    android:layout_marginBottom="16dp">
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Titre principal -->
+        <TextView
+            android:id="@+id/tvAbsenceTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Absences"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/violet"
+            android:layout_marginBottom="8dp"/>
+
+        <!-- ProgressBar (loader) -->
+        <ProgressBar
+            android:id="@+id/progressPresence"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_marginBottom="8dp"
+            />
+
+        <!-- Erreur -->
+        <TextView
+            android:id="@+id/tvErrorPresence"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/holo_red_dark"
+            android:visibility="gone"
+            android:layout_marginBottom="8dp"
+            />
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
+
+<!-- Carte pour afficher le résumé Présences/Absences -->
+<androidx.cardview.widget.CardView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="4dp"
+    app:cardBackgroundColor="@color/lightbeige"
+    android:layout_marginBottom="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Nombre de présences -->
+        <TextView
+            android:id="@+id/tvNbPresences"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Présences : 0"
+            android:textSize="16sp"
+            android:textColor="@color/darkblue"
+            android:layout_marginBottom="4dp"/>
+
+        <!-- Nombre d'absences -->
+        <TextView
+            android:id="@+id/tvNbAbsences"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Absences : 0"
+            android:textSize="16sp"
+            android:textColor="@color/darkblue"
+            android:layout_marginBottom="4dp"/>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
+
+<!-- Carte pour la liste des absences (ou message) -->
+<androidx.cardview.widget.CardView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="4dp"
+    app:cardBackgroundColor="@color/lightbeige">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- RecyclerView pour les absences à justifier -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvAbsencesToJustify"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            />
+
+        <!-- Message si aucune absence à justifier -->
+        <TextView
+            android:id="@+id/tvNoAbsencesToJustify"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Toutes vos absences sont justifiées ou vous n'avez aucune absence."
+            android:visibility="gone"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/darkblue"/>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
+
+</LinearLayout>
+    </ScrollView>

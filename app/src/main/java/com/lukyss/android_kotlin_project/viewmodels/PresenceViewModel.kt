@@ -1,4 +1,3 @@
-// PresenceViewModel.kt
 package com.lukyss.android_kotlin_project.viewmodels
 
 import androidx.lifecycle.*
