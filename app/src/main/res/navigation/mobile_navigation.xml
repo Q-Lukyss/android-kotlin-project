@@ -48,8 +48,8 @@
         tools:layout="@layout/fragment_calendrier" />
 
     <fragment
-        android:id="@+id/navigation_news"
-        android:name="com.lukyss.android_kotlin_project.ui.news.NewsFragment"
+        android:id="@+id/navigation_news_admin"
+        android:name="com.lukyss.android_kotlin_project.ui.news_admin.NewsFragment"
         android:label="@string/title_news"
         tools:layout="@layout/fragment_news" />
 
@@ -60,7 +60,7 @@
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.lukyss.android_kotlin_project.ui.LoginFragment"
-        android:label="LoginFragment" >
+        android:label="Connexion" >
         <action
             android:id="@+id/action_loginFragment_to_mainActivity"
             app:destination="@id/mainActivity" />
@@ -68,6 +68,17 @@
     <fragment
         android:id="@+id/navigation_home_administratif"
         android:name="com.lukyss.android_kotlin_project.ui.home_administratif.HomeAdministratifFragment"
-        android:label="fragment_home_administratif"
+        android:label="Home"
         tools:layout="@layout/fragment_home_administratif" />
+    <fragment
+        android:id="@+id/navigation_absence_admin"
+        android:name="com.lukyss.android_kotlin_project.ui.absence_admin.AbsenceFragment"
+        android:label="Justifier Absence"
+        tools:layout="@layout/fragment_absence_admin" />
+    <fragment
+        android:id="@+id/navigation_calendrier_admin"
+        android:name="com.lukyss.android_kotlin_project.ui.calendrier_admin.CalendrierFragment"
+        android:label="Calendrier"
+        tools:layout="@layout/fragment_calendrier_admin" />
+
 </navigation>

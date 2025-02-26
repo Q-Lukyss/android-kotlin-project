@@ -1,4 +1,4 @@
-package com.lukyss.android_kotlin_project.ui.news
+package com.lukyss.android_kotlin_project.ui.news_admin
 
 import android.os.Bundle
 import android.view.LayoutInflater
